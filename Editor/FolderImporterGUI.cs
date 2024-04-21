@@ -274,12 +274,15 @@ namespace Nomnom.FolderImporterPresets.Editor {
 					PresetHolder holder = (PresetHolder) ReorderableList.list[index];
 					EditorGUI.BeginChangeCheck();
 					holder.Enabled = EditorGUI.Toggle(toggleRect, holder.Enabled);
+					var enabled = GUI.enabled;
+					GUI.enabled = holder.Enabled;
 					holder.Filter = EditorGUI.TextField(filterRect, holder.Filter, EditorStyles.toolbarSearchField);
 					holder.Preset = (Preset)EditorGUI.ObjectField(presetRect, holder.Preset, typeof(Preset));
 
 					if (EditorGUI.EndChangeCheck()) {
 						onChanged();
 					}
+					GUI.enabled = enabled;
 				};
 				ReorderableList.onChangedCallback = _ => onChanged();
 			}
